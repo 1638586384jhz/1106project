@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hq.mapper.FilesMapper">
+<insert id="filesAdd" parameterType="com.hq.pojo.Files">
+insert into 
+files(eid,fname,fcontent,fremark)
+value(#{eId},#{fName},#{fContent},#{fRemark})
+</insert>
+<!-- 定义pojo类和数据表的映射关系 -->
+<!-- 定义pojo类和数据库表的映射关系 -->
+<resultMap type="com.hq.pojo.Files" id="BaseResutlMap">
+<!--定义主键列名  -->
+<id property="fId" column="fid" jdbcType="INTEGER"></id>
+<!-- 定义非主键属性 -->
+<result property="fName" column="fname" jdbcType="VARCHAR"/>
+<result property="fRemark" column="fremark" jdbcType="VARCHAR"/>
+
+</resultMap>
+
+
+<!-- 定义接口方法对应的sql语句配置 -->
+<select id="selectFiles" resultMap="BaseResutlMap" parameterType="com.hq.pojo.Files">
+	select * from files
+	
+	<trim prefix="where " suffix=" " suffixOverrides="and">
+	 	<if test="fName!=null and fName!=''">
+	 		fname like #{fName} and
+	 	</if>
+	 	 <if test="fRemark!=null and fRemark!=''">
+	 		fremark = #{fRemark} and
+	 	</if>
+	 	
+	</trim>
+	
+	limit #{start},#{rows}
+	
+</select>
+<!-- 查询总条数 -->
+<select id="selectCount" resultType="java.lang.Integer" parameterType="com.hq.pojo.Files">
+	select count(fid) from files
+
+	<trim prefix="where " suffix=" " suffixOverrides="and">
+	 	<if test="fName!=null and fName!=''">
+	 		fname like #{fName} and
+	 	</if>
+	 	 <if test="fRemark!=null and fRemark!=''">
+	 		fremark = #{fRemark} and
+	 	</if>
+	 	
+	</trim>
+</select>
+<update id="filesUpdate" parameterType="com.hq.pojo.Files">
+update files set eid=#{eId},fname=#{fName},fcontent=#{fContent},fremark=#{fRemark} where fid=#{fId}
+</update>
+<delete id="fileDel" parameterType="java.lang.Integer">
+delete from files where fid=#{fId}
+</delete>
+</mapper>

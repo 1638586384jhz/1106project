@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hq.mapper.AgreementMapper">
+<insert id="agreementAdd" parameterType="com.hq.pojo.Agreement">
+insert into 
+agreement(eid,astartdate,aenddate,ejob,acontent,aremark)
+value(#{eId},#{aStartDate},#{aEndDate},#{eJob},#{aContent},#{aRemark})
+</insert>
+<select id="selectIdByName" parameterType="com.hq.pojo.Agreement" resultType="int">
+select eid from employee where ename like #{eName}
+</select>
+ <!-- 定义pojo类和数据表的映射关系 -->
+<!-- 定义pojo类和数据库表的映射关系 -->
+<resultMap type="com.hq.pojo.Agreement" id="BaseResutlMap">
+<!--定义主键列名  -->
+<id property="aId" column="aid" jdbcType="INTEGER"></id>
+<!-- 定义非主键属性 -->
+<result property="eId" column="eid" jdbcType="INTEGER"/>
+
+
+</resultMap>
+
+
+<!-- 定义接口方法对应的sql语句配置 -->
+<select id="selectAgreement" resultMap="BaseResutlMap" parameterType="com.hq.pojo.Agreement">
+	select * from agreement
+	
+	<trim prefix="where " suffix=" " suffixOverrides="and">
+	 	<if test="eId!=null and eId!=''">
+	 		eid = #{eId} 
+	 	</if>
+	 	 
+	 	
+	</trim>
+	
+	limit #{start},#{rows}
+	
+</select>
+<!-- 查询总条数 -->
+<select id="selectCount" resultType="java.lang.Integer" parameterType="com.hq.pojo.Agreement">
+	select count(aid) from agreement
+
+	<trim prefix="where " suffix=" " suffixOverrides="and">
+	 	<if test="eId!=null and eId!=''">
+	 		eid =#{eId} 
+	 	</if>
+	 	 
+	 	
+	</trim>
+</select>
+<update id="agreementUpdate" parameterType="com.hq.pojo.Agreement" >
+update agreement 
+set eid=#{eId},astartdate=#{aStartDate},aenddate=#{aEndDate},ejob=#{eJob},acontent=#{aContent},aremark=#{aRemark}
+where aid=#{aId}
+</update>
+<delete id="agreementDel" parameterType="java.lang.Integer">
+delete from agreement where aid=#{aId}
+</delete>
+</mapper>

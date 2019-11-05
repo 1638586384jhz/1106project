@@ -29,9 +29,9 @@
 					</div>
 					<div class="wu-toolbar-search">
 
-						<label>姓名：</label><input class="wu-text" id="selectSname" style="width:100px">
-						<label>性别：</label>	<input type="radio" name="selecctSex" value="男" />男
-											<input type="radio" name="selecctSex" value="女" />女
+						<label>姓名：</label><input class="wu-text" id="selectEname" style="width:100px">
+						<label>性别：</label>	<input type="radio" name="selecctEex" value="男" />男
+											<input type="radio" name="selecctEex" value="女" />女
 						<a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="selectInfo()">查询</a>
 					</div>
 				</div>
@@ -46,21 +46,90 @@
 		
 		<!-- 模态框开始 -->
 		<div id="wu-dialog" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:400px; padding:10px;">
-			<form id="wu-form" method="get">
+			<form id="wu-form" method="get" >
 				<table>	
 					<tr>					
-						<td><input type="hidden" name="sId" class="wu-text" /></td>
+						<td><input type="hidden" name="eId" class="wu-text" /></td>
 					</tr>
 					<tr>
 						<td width="60" align="right">姓名:</td>
-						<td><input type="text" name="sName" class="wu-text" /></td>
+						<td><input type="text" name="eName" class="wu-text" value=""/></td>
 					</tr>
 					<tr>
 						<td align="right">性别:</td>
 						<td>
-						<input type="radio" name="sSex" value="男" />男
-						<input type="radio" name="sSex" value="女" />女
+						<input type="radio" name="eSex" value="男" />男
+						<input type="radio" name="eSex" value="女" />女
 						</td>
+					</tr>
+					<tr>
+						<td align="right">出生日期:</td>
+						<td><input id="meeting" name="eBirthDate" type="date" /></td>
+					</tr>
+					<tr>
+						<td align="right">联系电话:</td>
+						<td><input type="text" name="ePhone" class="phone-text" /><td>
+					</tr>
+					<tr>
+						<td align="right">邮箱地址:</td>
+						<td><input type="text" name="eEmail" class="Email-text" /><td>
+					</tr>
+					<tr>
+						<td align="right">学历:</td>
+						<td>
+							<select name="eEducation">
+							<option value="小学">小学</option>
+							<option value="初中">初中</option>
+							<option value="高中">高中</option>
+							<option value="专科">专科</option>
+							<option value="本科">本科</option>
+							<option value="硕士">硕士</option>
+							<option value="博士">博士</option>
+							</select>
+						<td>
+					</tr>					
+						<tr>
+						<td align="right">部门:</td>
+						<td>
+							<select  name="eDepartment">
+							<option value="总经理">总经理</option>
+							<option value="财务部">财务部</option>
+							<option value="研发部">研发部</option>
+							<option value="项目部">项目部</option>
+							<option value="运维部">运维部</option>
+							<option value="人事部">人事部</option>
+							</select>
+						</td>
+						</tr>	
+						<tr>
+						<td align="right">职务:</td>
+						<td>
+							<select  name="eJob" >
+							<option value="总经理">总经理</option>
+							<option value="部门经理">部门经理</option>
+							<option value="组长">组长</option>
+							<option value="组员">组员</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">入职时间:</td>
+						<td><input id="meeting" name="eEntryDate" type="date" /></td>
+					</tr>
+					<tr>
+						<td align="right">人员状态:</td>
+						<td>
+							<select  name="eState">
+								<option value="在职">在职</option>
+								<option value="兼职">兼职</option>
+								<option value="离职">离职</option>
+								
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td align="right">备注:</td>
+						<td><input type="text" name="eRemark" class="eRemark-text" /></td>
 					</tr>
 				</table>
 			</form>
@@ -73,40 +142,94 @@
  * 加载列表数据
  */
 $('#wu-datagrid').datagrid({
-	url: 'selectStudent.do',//服务端地址
+	url: 'selectEmpolyee.do',//服务端地址
 	method: "get", //提交方式	
-	title : '学生列表', //表格名称
+	title : '员工列表', //表格名称
 	iconCls : 'icon-chart-organisation', //图标
 	singleSelect: true,//是否允许多选，true：单选，false:多选
  	pagination : true,//如果表格需要支持服务端分页，必须设置该选项为true
-	pageSize : 2, //表格中每页显示的行数 row:2 page:1
+	pageSize : 5, //表格中每页显示的行数 row:2 page:1
 	pageList : [ 2, 5, 10],//分页下来选择框 
 	fitColumns: true,//表格的列自适应父级容器
 	fit:true,//表格的高度是否适宜当前页面,true:表示适宜,false:不适宜
 	remoteSort : false,//是否从服务器排序数
-	sortName : 'sId', //按照指定的sId列的值排序
+	sortName : 'eId', //按照指定的eId列的值排序
 	sortOrder : 'asc', //使用倒序排序 */
 	columns: [
 		[{
 				checkbox: true
 			},
 			{
-				field: 'sId',
+				field: 'eId',
 				title: '编号',
-				width:20,
+				width:10,
 				sortable: true
 			},
 			{
-				field: 'sName',
+				field: 'eName',
 				title: '姓名',
-				width: 100,
+				width: 10,
 				sortable: true
 			},
 			{
-				field: 'sSex',
+				field: 'eSex',
 				title: '性别',
-				width: 100
-			}
+				width: 10
+			},
+			{
+				field: 'eBirthDate',
+				title: '出生日期',
+				width: 20,
+				sortable: true
+			},
+			{
+				field: 'ePhone',
+				title: '电话',
+				width: 20,
+				sortable: true
+			},
+			{
+				field: 'eEmail',
+				title: '邮箱',
+				width: 30,
+				sortable: true
+			},
+			{
+				field: 'eEducation',
+				title: '学历',
+				width: 10,
+				sortable: true
+			},
+			{
+				field: 'eDepartment',
+				title: '部门',
+				width: 10,
+				sortable: true
+			},
+			{
+				field: 'eJob',
+				title: '职务',
+				width: 10,
+				sortable: true
+			},
+			{
+				field: 'eEntryDate',
+				title: '入职日期',
+				width: 20,
+				sortable: true
+			},
+			{
+				field: 'eState',
+				title: '状态',
+				width: 10,
+				sortable: true
+			},
+			{
+				field: 'eRemark',
+				title: '备注',
+				width: 50,
+				sortable: true
+			},
 
 		]
 	]
@@ -117,7 +240,7 @@ $('#wu-datagrid').datagrid({
 	 */
 	function add() {
 		$('#wu-form').form('submit', {
-			url: 'add.do',//服务端url地址
+			url: 'employeeAdd.do',//服务端url地址
 			success: function(data) {
 				if(data) {
 					$.messager.alert('信息提示', '提交成功！', 'info');
@@ -131,13 +254,13 @@ $('#wu-datagrid').datagrid({
 			}
 		});
 	}
-
+	
 	/**
 	 * 修改操作
 	 */
 	function edit() {
 		$('#wu-form').form('submit', {
-			url: 'update.do',
+			url: 'employeeUpdate.do',
 			success: function(data) {
 				if(data) {
 					$.messager.alert('信息提示', '提交成功！', 'info');
@@ -162,8 +285,8 @@ $('#wu-datagrid').datagrid({
 				var items = $('#wu-datagrid').datagrid('getSelected');
 				console.log(items);
 				$.ajax({
-					url: 'del.do',
-					data: {"id":items.sId},
+					url: 'employeeDel.do',
+					data: {"eId":items.eId},
 					success: function(data) {
 						if(data) {
 							$.messager.alert('信息提示', '删除成功！', 'info');
@@ -237,10 +360,10 @@ $('#wu-datagrid').datagrid({
 	//条件查询
 	function selectInfo(){
 		
-		var sName = $("#selectSname").val();
-		var sSex = $("input[name='selecctSex']:checked").val();
+		var eName = $("#selectEname").val();
+		var eSex = $("input[name='selecctEex']:checked").val();
 		
-		$('#wu-datagrid').datagrid("load",{"sName":sName,"sSex":sSex});
+		$('#wu-datagrid').datagrid("load",{"eName":eName,"eSex":eSex});
 	}
 </script>
 </html>

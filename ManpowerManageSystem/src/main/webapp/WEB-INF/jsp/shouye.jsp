@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-默认页面
+<h3>第十小组人事资源管理系统首页</h3>
 </body>
 </html>

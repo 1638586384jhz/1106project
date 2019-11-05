@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hq.mapper.EmployeeMapper">
+<insert id="employeeAdd" parameterType="com.hq.pojo.Employee">
+insert into 
+employee(ename,esex,ebirthdate,ephone,eemail,eeducation,edepartment,ejob,eentrydate,estate,eremark)
+value(#{eName},#{eSex},#{eBirthDate},#{ePhone},#{eEmail},#{eEducation},#{eDepartment},#{eJob},#{eEntryDate},#{eState},#{eRemark})
+</insert>
+ <!-- 定义pojo类和数据表的映射关系 -->
+<!-- 定义pojo类和数据库表的映射关系 -->
+<resultMap type="com.hq.pojo.Employee" id="BaseResutlMap">
+<!--定义主键列名  -->
+<id property="eId" column="eid" jdbcType="INTEGER"></id>
+<!-- 定义非主键属性 -->
+<result property="eName" column="ename" jdbcType="VARCHAR"/>
+<result property="eSex" column="esex" jdbcType="VARCHAR"/>
+
+</resultMap>
+
+
+<!-- 定义接口方法对应的sql语句配置 -->
+<select id="selectEmployee" resultMap="BaseResutlMap" parameterType="com.hq.pojo.Employee">
+	select * from employee
+	
+	<trim prefix="where " suffix=" " suffixOverrides="and">
+	 	<if test="eName!=null and eName!=''">
+	 		ename like #{eName} and
+	 	</if>
+	 	 <if test="eSex!=null and eSex!=''">
+	 		esex = #{eSex} and
+	 	</if>
+	 	
+	</trim>
+	
+	limit #{start},#{rows}
+	
+</select>
+<!-- 查询总条数 -->
+<select id="selectCount" resultType="java.lang.Integer" parameterType="com.hq.pojo.Employee">
+	select count(eid) from employee
+
+	<trim prefix="where " suffix=" " suffixOverrides="and">
+	 	<if test="eName!=null and eName!=''">
+	 		ename like #{eName} and
+	 	</if>
+	 	 <if test="eSex!=null and eSex!=''">
+	 		esex = #{eSex} and
+	 	</if>
+	 	
+	</trim>
+</select>
+<update id="employeeUpdate" parameterType="com.hq.pojo.Employee">
+update employee 
+set ename=#{eName},esex=#{eSex},ebirthdate=#{eBirthDate},ephone=#{ePhone},eemail=#{eEmail},eeducation=#{eEducation},edepartment=#{eDepartment},ejob=#{eJob},eentrydate=#{eEntryDate},estate=#{eState},eremark=#{eRemark}
+where eid=#{eId}
+</update>
+<delete id="employeeDel" parameterType="int">
+delete from employee where eid=#{eId} 
+</delete>
+
+</mapper>
