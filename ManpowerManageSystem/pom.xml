@@ -7,7 +7,7 @@
   <name>01</name>
   <description>01</description><properties>
 		<!-- spring版本号 -->
-		<spring.version>4.0.2.RELEASE</spring.version>
+		<spring.version>5.2.20.RELEASE</spring.version>
 		<!-- log4j日志文件管理包版本 -->
 		<!-- logback.xml,log4j -->
 		<slf4j.version>1.7.7</slf4j.version>
